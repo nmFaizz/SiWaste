@@ -15,6 +15,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SiWaste",
   description: "Aplikasi pelaporan sampah berbasis web",
+  icons: {
+    icon: "/SiWaste-Logo.png",
+    apple: "/SiWaste-Logo.png",
+  }
 };
 
 export default function RootLayout({
@@ -25,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white-secondary`}
       >
         {children}
       </body>
