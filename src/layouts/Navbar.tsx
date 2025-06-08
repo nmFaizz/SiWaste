@@ -1,6 +1,6 @@
-"use client";
 import Link from "next/link";
 import { History, Info, Plus } from "lucide-react";
+
 import Button from "@/components/buttons/Button";
 
 export default function Navbar() {
@@ -8,7 +8,7 @@ export default function Navbar() {
         <header className="flex items-center justify-between border-b border-gray-main px-4 py-[25px] sm:px-[40px] bg-white-main">
             <nav className="flex items-center gap-8">
                 <Link 
-                    href="/"
+                    href="/home"
                     className="font-medium text-xl md:text-4xl"
                 >
                     SiWaste
@@ -37,9 +37,11 @@ export default function Navbar() {
                     BUAT LAPORAN
                 </Button>
 
-                <figure className="rounded-full w-[50px] h-[50px] bg-gray-main">
+                <Link href="/profile">
+                    <figure className="rounded-full w-[50px] h-[50px] bg-gray-main">
 
-                </figure>
+                    </figure>
+                </Link>
             </nav>
         </header>
     )

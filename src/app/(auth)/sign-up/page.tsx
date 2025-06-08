@@ -7,53 +7,73 @@ import Input from "@/components/forms/Input";
 import Image from "next/image";
 import MainLayout from "@/layouts/MainLayout";
 import { supabase } from "@/lib/supabase";
-import { useMutation } from "@tanstack/react-query";
-import { AuthResponsePassword } from "@supabase/supabase-js";
 import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-type SignInFormValues = {
-  email: string;
-  password: string;
+type SignUpFormValues = {
+    email: string;
+    password: string;
+    username: string;
 }
 
-export default function SignInPage() {
-  const methods = useForm<SignInFormValues>({
+export default function SingUpPage() {
+  const methods = useForm<SignUpFormValues>({
     defaultValues: {
       email: "",
       password: "",
+      username: ""
     },
   });
   const { handleSubmit } = methods;
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const { isPending, mutate } = useMutation<AuthResponsePassword, Error, SignInFormValues>({
-    mutationFn: async (data: SignInFormValues) => {
-      const { data: res, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
-      });
+  const { isPending, mutate } = useMutation<void, Error, SignUpFormValues>({
+    mutationFn: async (data: SignUpFormValues) => {
 
-      if (error) {
-        throw new Error("Password or username is incorrect.");
-      }
+        const { data: authRes, error } = await supabase.auth.signUp({
+            email: data.email,
+            password: data.password,
+            options: {
+                data: {
+                username: data.username,
+                },
+            },
+        })
 
-      return {
-        data: res,
-        error
-      }
+        if (error) {
+            toast.error("SignUp Error: " + error.message);
+            return;
+        }
+
+        const user = authRes.user;
+
+        const { error: insertError } = await supabase
+            .from('user')
+            .insert([
+                {
+                    id: user?.id,             
+                    email: data.email,
+                    user_name: data.username,
+                },
+            ]);
+
+        if (insertError) {
+            toast.error("Failed to retrieve user data");
+            return
+        }
     },
     onSuccess: () => {
-      toast.success("Successfully signed in.");
-      router.push("/home");
+      toast.success("Successfully Signed Up.");
+      router.push("/sign-in");
     },
     onError: (error) => {
-      toast.error(`Sign in failed: ${error.message}`);
+      toast.error(`Sign Up failed: ${error.message}`);
     },
   })
 
-  const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
+  const onSubmit: SubmitHandler<SignUpFormValues> = async (data) => {
     mutate(data);
   }
 
@@ -64,13 +84,13 @@ export default function SignInPage() {
       </figure>
       <FormProvider {...methods}>
         <form 
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex-1 flex justify-center items-center border p-5 w-full"
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex-1 flex justify-center items-center border p-5 w-full"
         >
           <div className="w-full max-w-[520px]">
             <div className="flex flex-col items-center mb-8">
               <h1 className="font-bold text-3xl text-center mb-2">
-                SignIn
+                SignUp
               </h1>
               <div className="bg-primary h-[5px] w-[80px]"></div>
             </div>
@@ -87,16 +107,33 @@ export default function SignInPage() {
             </figure> 
             <div className="space-y-4 mb-12">
               <Input 
+                id="username"
+                label="Username"
+                type="text"
+                placeholder="Enter username"
+                validation={{
+                    required: "Username is required",
+                    minLength: {
+                        value: 3,
+                        message: "Username must be at least 3 characters",
+                    },
+                    maxLength: {
+                        value: 20,
+                        message: "Username cannot exceed 20 characters",
+                    },
+                }}
+              />
+              <Input 
                 id="email"
                 label="Email"
                 type="email"
                 placeholder="Enter your email"
                 validation={{
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "Invalid email address",
-                  },
+                    required: "Email is required",
+                    pattern: {
+                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                        message: "Invalid email address",
+                    },
                 }}
               />
 
@@ -125,16 +162,16 @@ export default function SignInPage() {
             <Button
               variant="primary"
               type="submit"
-              className="w-full flex items-center justify-center"
               isLoading={isPending}
+              className="w-full flex items-center justify-center"
             >
               Sign In
             </Button>
 
             <p className="text-center mt-4">
-              Don&apos;t have an account?{" "}
-              <Link href="/sign-up" className="text-blue-500 hover:underline">
-                Sign Up
+              Already have an account?{" "}
+              <Link href="/sign-in" className="text-blue-500 hover:underline">
+                Sign In
               </Link>
             </p>
           </div>

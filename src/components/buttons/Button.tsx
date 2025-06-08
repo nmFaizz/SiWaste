@@ -48,6 +48,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           'transition-colors duration-75',
           'px-4 py-1.5', 
           'text-sm md:text-base',
+          'cursor-pointer',
           [
             variant === 'primary' && [
                 'bg-primary text-white',
