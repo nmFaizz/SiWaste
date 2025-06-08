@@ -5,7 +5,7 @@ import { Eye, EyeOff } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-const InputSize = ["sm", "md"] as const
+type InputSize = "sm" | "md"
 
 export type InputProps = {
 	id: string
@@ -13,7 +13,7 @@ export type InputProps = {
 	labelClassName?: string
 	helperText?: React.ReactNode
 	helperTextClassName?: string
-	inputSize?: (typeof InputSize)[number]
+	inputSize?: InputSize
 	hideError?: boolean
 	validation?: RegisterOptions
 } & React.ComponentPropsWithoutRef<"input">

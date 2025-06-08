@@ -1,10 +1,6 @@
 import Button from "@/components/buttons/Button"
 import { ArrowRight } from "lucide-react"
 
-type CardPelaporanProps = {
-    
-}
-
 export default function CardPelaporan() {
     return (
         <div className="border border-gray-main p-5 rounded-xl">
