@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react"
 export default function CardPelaporan() {
     return (
         <div className="border border-gray-main p-5 rounded-xl">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-wrap gap-5 items-center justify-between mb-4">
                 <div className="flex items-center gap-4">
                     <figure className="rounded-full w-[50px] h-[50px] bg-black">
 

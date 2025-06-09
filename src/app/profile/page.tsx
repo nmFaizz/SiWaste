@@ -1,33 +1,15 @@
 "use client"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import { supabase } from "@/lib/supabase"
 import MainLayout from "@/layouts/MainLayout";
-import { UserData } from "@/types/user";
-import toast from "react-hot-toast";
 import Button from "@/components/buttons/Button";
-import { useRouter } from "next/navigation";
+import useUserProfile from "@/hooks/useUserProfile";
 
 export default function ProfilePage() {
-    const { data: user } = useQuery<UserData>({
-        queryKey: ["profile"],
-        queryFn: async () => {
-            const { data, error } = await supabase.auth.getUser();
-            if (error) throw new Error(error.message);
-
-            const { data: userData } = await supabase
-                .from("user")
-                .select("*")
-                .eq("id", data.user?.id)
-                .single();
-
-                console.log("User Data:", userData);
-   
-            return userData;
-        },
-        staleTime: 1000 * 60 * 5, // 5 minutes
-        refetchOnWindowFocus: false,
-    })
+    const { user } = useUserProfile();
 
     const router = useRouter();
 

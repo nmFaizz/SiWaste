@@ -1,48 +1,119 @@
+"use client"
 import Link from "next/link";
-import { History, Info, Plus } from "lucide-react";
+import { 
+    History, 
+    Info, 
+    Plus, 
+    Menu 
+} from "lucide-react";
+import { useState } from "react";
 
 import Button from "@/components/buttons/Button";
+import ModalLaporan from "@/components/modals/ModalLaporan";
+import useUserProfile from "@/hooks/useUserProfile";
 
 export default function Navbar() {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const { user } = useUserProfile();
+
     return (
-        <header className="flex items-center justify-between border-b border-gray-main px-4 py-[25px] sm:px-[40px] bg-white-main">
-            <nav className="flex items-center gap-8">
-                <Link 
-                    href="/home"
-                    className="font-medium text-xl md:text-4xl"
+        <header className="sticky top-0 z-50">
+            <div className="flex items-center justify-between border-b border-gray-main px-4 py-[12px] sm:px-[40px] bg-white-main">
+                <nav className="flex items-center gap-8">
+                    <Link 
+                        href="/home"
+                        className="font-medium text-2xl md:text-4xl"
+                    >
+                        SiWaste
+                    </Link>
+                    
+                    <ul className="hidden md:flex items-center gap-8">
+                        <li className="inline-block mr-4">
+                            <Link href="/" className="text-gray-main flex items-center gap-2">
+                                <History />
+                                History
+                            </Link>
+                        </li>
+                        <li className="inline-block mr-4">
+                            <Link href="/about" className="text-gray-main flex items-center gap-2">
+                                <Info />
+                                About
+                            </Link>
+                        </li>
+                    </ul>   
+                </nav>
+
+                <nav className="hidden md:flex items-center gap-8">
+                    <ModalLaporan>
+                        {({ openModal }) => (
+                            <Button
+                                onClick={openModal}
+                                rightIcon={Plus}
+                            >
+                                BUAT LAPORAN
+                            </Button>
+                        )}
+                    </ModalLaporan>
+
+                    <Link href="/profile">
+                        <figure className="rounded-full w-[50px] h-[50px] bg-gray-main hover:border-[5px] hover:border-primary-hover">
+
+                        </figure>
+                    </Link>
+                </nav>
+
+                <div 
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="block md:hidden hover:bg-white-secondary"
                 >
-                    SiWaste
-                </Link>
-                
-                <ul className="flex items-center gap-8">
-                    <li className="inline-block mr-4">
-                        <Link href="/" className="text-gray-main flex items-center gap-2">
-                            <History />
-                            History
-                        </Link>
-                    </li>
-                    <li className="inline-block mr-4">
-                        <Link href="/about" className="text-gray-main flex items-center gap-2">
-                            <Info />
-                            About
-                        </Link>
-                    </li>
-                </ul>   
-            </nav>
+                    <Menu className="w-[30px] h-[30px]" />
+                </div>
+            </div>
+            {isOpen && (
+                <nav className="md:hidden bg-white-main border-b border-gray-main px-4 py-[12px]">
+                    <ul className="flex flex-col items-start gap-4">
+                        <li>
+                            <Link 
+                                href="/" 
+                                className="text-gray-main flex items-center gap-2"
+                            >
+                                <History />
+                                History
+                            </Link>
+                        </li>
+                        <li>
+                            <Link 
+                                href="/about" 
+                                className="text-gray-main flex items-center gap-2"
+                            >
+                                <Info />
+                                About
+                            </Link>
+                        </li>
+                        <li>
+                            <ModalLaporan>
+                                {({ openModal }) => (
+                                    <Button
+                                        onClick={openModal}
+                                        rightIcon={Plus}
+                                    >
+                                        BUAT LAPORAN
+                                    </Button>
+                                )}
+                            </ModalLaporan>
+                        </li>
+                        <li className="flex items-center gap-4 hover:bg-white-secondary rounded-xl">
+                            <Link href="/profile">
+                                <figure className="rounded-full w-[50px] h-[50px] bg-gray-main">
+                                    
+                                </figure>
+                            </Link>
 
-            <nav className="flex items-center gap-8">
-                <Button
-                    rightIcon={Plus}
-                >
-                    BUAT LAPORAN
-                </Button>
-
-                <Link href="/profile">
-                    <figure className="rounded-full w-[50px] h-[50px] bg-gray-main">
-
-                    </figure>
-                </Link>
-            </nav>
+                            <p className="font-bold">{user?.user_name}</p>
+                        </li>
+                    </ul>
+                </nav>
+            )}
         </header>
     )
 }
