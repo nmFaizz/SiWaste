@@ -25,7 +25,6 @@ export default function InputFile({
 	hideError = false,
 	validation,
 	className,
-	inputSize = "md",
 	readOnly = false,
 	labelClassName,
 	helperTextClassName,
