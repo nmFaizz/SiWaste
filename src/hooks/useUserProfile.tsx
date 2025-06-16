@@ -15,8 +15,6 @@ export default function useUserProfile() {
                 .select("*")
                 .eq("id", data.user?.id)
                 .single();
-
-                console.log("User Data:", userData);
    
             return userData;
         },

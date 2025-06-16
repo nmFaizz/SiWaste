@@ -11,6 +11,7 @@ import { useState } from "react";
 import Button from "@/components/buttons/Button";
 import ModalLaporan from "@/components/modals/ModalLaporan";
 import useUserProfile from "@/hooks/useUserProfile";
+import Image from "next/image";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -18,12 +19,21 @@ export default function Navbar() {
 
     return (
         <header className="sticky top-0 z-50">
-            <div className="flex items-center justify-between border-b border-gray-main px-4 py-[12px] sm:px-[40px] bg-white-main">
+            <div className="flex items-center justify-between shadow px-4 py-[12px] sm:px-[40px] bg-white-main">
                 <nav className="flex items-center gap-8">
                     <Link 
                         href="/home"
-                        className="font-medium text-2xl md:text-4xl"
+                        className="flex items-center font-medium text-xl md:text-2xl"
                     >
+                        <figure className="w-[40px] h-[40px] mr-2">
+                            <Image 
+                                src="/SiWaste-Logo.png"
+                                alt="Logo SiWaste"
+                                width={320}
+                                height={320}
+                                className="inline-block mr-2"
+                            />
+                        </figure>
                         SiWaste
                     </Link>
                     
@@ -50,13 +60,13 @@ export default function Navbar() {
                                 onClick={openModal}
                                 rightIcon={Plus}
                             >
-                                BUAT LAPORAN
+                                Buat Laporan
                             </Button>
                         )}
                     </ModalLaporan>
 
                     <Link href="/profile">
-                        <figure className="rounded-full w-[50px] h-[50px] bg-gray-main hover:border-[5px] hover:border-primary-hover">
+                        <figure className="rounded-full w-[40px] h-[40px] bg-gray-main hover:border-[5px] hover:border-primary-hover">
 
                         </figure>
                     </Link>
@@ -97,7 +107,7 @@ export default function Navbar() {
                                         onClick={openModal}
                                         rightIcon={Plus}
                                     >
-                                        BUAT LAPORAN
+                                        Buat Laporan
                                     </Button>
                                 )}
                             </ModalLaporan>

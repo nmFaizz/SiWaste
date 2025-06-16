@@ -7,6 +7,7 @@ import Textarea from "../forms/Textarea";
 import Button from "../buttons/Button";
 import useUserProfile from "@/hooks/useUserProfile";
 import { ArrowRight } from "lucide-react";
+import InputFile from "../forms/InputFile";
 
 type LaporanFormValues = {
     judul_laporan: string;
@@ -59,6 +60,12 @@ export default function ModalLaporan({
                             <Textarea 
                                 id="deskripsi_laporan"
                                 label="Deskripsi Laporan"
+                            />
+
+                            <InputFile 
+                                id="foto_laporan"
+                                label="Foto Laporan"
+                                capture="environment"
                             />
 
                             <div className="flex flex-col sm:flex-row items-center gap-5">

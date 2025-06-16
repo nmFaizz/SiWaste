@@ -1,13 +1,13 @@
-import { LoaderCircle, LucideIcon } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'light' | 'danger';
 type ButtonSize = 'sm' | 'base';
 
-type ButtonProps = {
-  isLoading?: boolean;
+type ButtonLinkProps = {
   variant?: ButtonVariant;
   size?: ButtonSize;
   leftIcon?: LucideIcon;
@@ -16,31 +16,29 @@ type ButtonProps = {
     leftIcon?: string;
     rightIcon?: string;
   };
-} & React.ComponentPropsWithRef<'button'>;
+  href: string;
+} & React.ComponentPropsWithRef<'a'>;
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
   (
     {
       children,
       className,
-      disabled: buttonDisabled,
-      isLoading,
       variant = 'primary',
       size = 'base',
       leftIcon: LeftIcon,
       rightIcon: RightIcon,
       classNames,
+      href,
       ...rest
     },
     ref
   ) => {
-    const disabled = isLoading || buttonDisabled;
 
     return (
-      <button
+      <Link
+        href={href}
         ref={ref}
-        type='button'
-        disabled={disabled}
         className={cn(
           'inline-flex items-center rounded-lg font-medium',
           'focus-visible:ring-primary-500 focus:outline-none focus-visible:ring',
@@ -57,31 +55,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 'disabled:bg-primary-700',
               ],
               variant === 'danger' && [
-                'bg-error-main text-white hover:bg-error-light',
+                'bg-error-main text-white',
               ]
           ],
           //#endregion  //*======== Variants ===========
           'disabled:cursor-not-allowed',
-          isLoading &&
-            'relative text-transparent transition-none hover:text-transparent disabled:cursor-wait',
           className
         )}
         {...rest}
       >
-        {isLoading && (
-          <div
-            className={cn(
-              'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
-              {
-                'text-white': ['primary', 'dark'].includes(variant),
-                'text-black': ['light'].includes(variant),
-                'text-primary-500': ['outline', 'ghost'].includes(variant),
-              }
-            )}
-          >
-            <LoaderCircle className='animate-spin' />
-          </div>
-        )}
         {LeftIcon && (
           <div
             className={cn([
@@ -121,11 +103,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             />
           </div>
         )}
-      </button>
+      </Link>
     );
   }
 );
 
-Button.displayName = 'Button';
+ButtonLink.displayName = 'ButtonLink';
 
-export default Button;
+export default ButtonLink;

@@ -1,13 +1,17 @@
 "use client"
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { 
+    FormProvider, 
+    SubmitHandler, 
+    useForm 
+} from "react-hook-form";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import Image from "next/image";
 
 import Button from "@/components/buttons/Button";
 import Input from "@/components/forms/Input";
-import Image from "next/image";
 import MainLayout from "@/layouts/MainLayout";
 import { supabase } from "@/lib/supabase";
-import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
@@ -150,13 +154,6 @@ export default function SingUpPage() {
                   },
                 }}
               />
-
-              <Link
-                href="/forgot-password"
-                className="text-primary hover:underline"
-              >
-                Forgot Password?
-              </Link>
             </div>
 
             <Button
@@ -165,7 +162,7 @@ export default function SingUpPage() {
               isLoading={isPending}
               className="w-full flex items-center justify-center"
             >
-              Sign In
+              Sign Up
             </Button>
 
             <p className="text-center mt-4">

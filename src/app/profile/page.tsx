@@ -43,6 +43,7 @@ export default function ProfilePage() {
                 <Button 
                     className="mt-8"
                     isLoading={isPending}
+                    variant="danger"
                     onClick={() => mutate()}
                 >
                     Logout
