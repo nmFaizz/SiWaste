@@ -36,9 +36,12 @@ export default function ProfilePage() {
                 <figure className="w-[150px] h-[150px] bg-black rounded-full">
 
                 </figure>
+
                 <h1 className="font-bold text-center text-3xl mt-8">
-                    Hello, {user?.user_name}
+                    Halo, {user?.user_name}
                 </h1>
+
+                <p className="mt-2">{user?.peran}</p>
 
                 <Button 
                     className="mt-8"

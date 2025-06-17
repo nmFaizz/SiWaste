@@ -1,3 +1,5 @@
+import { UserPeran } from "./user";
+
 export type Laporan = {
     date: string;
     deskripsi: string;
@@ -8,5 +10,7 @@ export type Laporan = {
     user_id: string;
     user: {
         user_name: string;
+        peran: UserPeran;
     }
 };
+

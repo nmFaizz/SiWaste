@@ -1,16 +1,20 @@
 import { ArrowRight } from "lucide-react"
 
 import ButtonLink from "@/components/buttons/ButtonLink"
+import { UserPeran } from "@/types/user";
 
 type CardPelaporanProps = {
-    user_name?: string;
+    user: {
+        user_name: string;
+        peran: UserPeran;
+    }
     status_bersih: boolean;
     laporan_id: number;
 }
 
 export default function CardPelaporan({
     laporan_id,
-    user_name,
+    user,
     status_bersih,
 }: CardPelaporanProps) {
   
@@ -23,8 +27,8 @@ export default function CardPelaporan({
                     </figure>
 
                     <div>
-                        <h4 className="font-medium">{user_name}</h4>
-                        <p>Pelajar</p>
+                        <h4 className="font-medium">{user.user_name}</h4>
+                        <p>{user.peran}</p>
                     </div>
                 </div>
 
@@ -33,9 +37,11 @@ export default function CardPelaporan({
                 </div>
             </div>
 
-            <figure className="w-full h-[210px] bg-gray-main">
+            <div className="w-full flex justify-center py-4">
+                <figure className="w-full max-w-[190px] h-[190px] rounded-lg bg-gray-main">
 
-            </figure>
+                </figure>
+            </div>
 
             <ButtonLink
                 href={`/laporan/${laporan_id}`}

@@ -41,7 +41,7 @@ export default function SingleLaporanClient({
 
                         </figure>
 
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col items-center text-center">
                             <h3 className="font-medium text-2xl">{laporan?.judul}</h3>
                             <p className="text-xl">{laporan?.user.user_name}</p>
 

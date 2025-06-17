@@ -15,7 +15,7 @@ export type InputFileProps = {
 	helperTextClassName?: string
 	inputSize?: InputSize
 	hideError?: boolean
-	validation?: RegisterOptions
+validation?: RegisterOptions
 } & React.ComponentPropsWithoutRef<"input">
 
 export default function InputFile({

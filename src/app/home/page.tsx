@@ -3,16 +3,29 @@ import { useQuery } from "@tanstack/react-query"
 
 import CardPelaporan from "@/components/cards/CardPelaporan"
 import MainLayout from "@/layouts/MainLayout"
-import { getAllLaporan } from "@/services/laporan"
 import { Laporan } from "@/types/laporan"
+import { supabase } from "@/lib/supabase"
 
 export default function PageHome() {
 
     const { data: listLaporan } = useQuery<Laporan[]>({
         queryKey: ["laporan"],
         queryFn: async () => {
-            const res = await getAllLaporan()
-            return res
+            const { data: laporan, error } = await supabase
+                .from("laporan")
+                .select(`
+                    *,
+                    user:user (
+                        user_name,
+                        peran
+                    )
+                `)
+
+            if (error) {
+                throw new Error(error.message);
+            }
+
+            return laporan;
         },
         staleTime: 1000 * 60 * 5,
         refetchOnWindowFocus: false,
@@ -46,7 +59,7 @@ export default function PageHome() {
                         <CardPelaporan 
                             key={laporan.laporan_id} 
                             laporan_id={laporan.laporan_id}
-                            user_name={laporan.user.user_name}
+                            user={laporan.user}
                             status_bersih={laporan.status_bersih}
                         />
                     ))}
