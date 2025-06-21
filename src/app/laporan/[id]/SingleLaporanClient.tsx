@@ -45,7 +45,7 @@ export default function SingleLaporanClient({
                             <h3 className="font-medium text-2xl">{laporan?.judul}</h3>
                             <p className="text-xl">{laporan?.user.user_name}</p>
 
-                            <div className="mt-3 border border-success-main text-success-main px-4 py-0.5 rounded-full w-max">
+                            <div className={`mt-3 border ${laporan?.status_bersih ? "border-success-main text-success-main" : "text-error-main bg-error-main"} border-success-main text-success-main px-4 py-0.5 rounded-full w-max`}>
                                 <p className="text-xs">{laporan?.status_bersih ? "BERSIH" : "BELUM BERSIH"}</p>
                             </div>
                         </div>
@@ -53,7 +53,7 @@ export default function SingleLaporanClient({
                     
                     <div className="flex flex-col gap-3 max-w-[350px]">
                         <Button variant="danger" className="flex items-center justify-center">
-                            Laporkan Sampah
+                            Laporkan Laporan
                         </Button>
                         <Button className="flex items-center justify-center">
                             Tangani Sampah
