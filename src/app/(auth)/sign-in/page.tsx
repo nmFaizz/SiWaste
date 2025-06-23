@@ -59,8 +59,15 @@ export default function SignInPage() {
 
   return (
     <MainLayout widthSize="full" className="flex">
-      <figure className="flex-1 bg-gray-main min-h-screen md:block hidden">
-        
+      <figure className="flex-1 bg-gray-main max-h-screen md:block hidden">
+        <Image 
+          src="/siwaste-login-reg.jpg"
+          alt="Sign In Background"
+          width={1920}
+          height={1080}
+          className="w-full h-full object-cover"
+          priority
+        />
       </figure>
       <FormProvider {...methods}>
         <form 
