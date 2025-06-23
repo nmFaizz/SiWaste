@@ -61,6 +61,7 @@ export default function PageHome() {
                             laporan_id={laporan.laporan_id}
                             user={laporan.user}
                             status_bersih={laporan.status_bersih}
+                            foto_laporan={laporan.foto_laporan}
                         />
                     ))}
                 </div>

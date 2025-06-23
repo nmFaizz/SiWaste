@@ -8,6 +8,7 @@ export type Laporan = {
     lokasi_id: number | null;
     status_bersih: boolean;
     user_id: string;
+    foto_laporan: string | null;
     user: {
         user_name: string;
         peran: UserPeran;
