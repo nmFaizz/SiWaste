@@ -66,7 +66,7 @@ export default function ModalTangani({
                 throw new Error(uploadError.message);
             }
 
-            const { error: insertError, data: update } = await supabase
+            const { error: insertError } = await supabase
                 .from("laporan")
                 .update({
                     deskripsi: data.deskripsi_laporan,
