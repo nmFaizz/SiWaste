@@ -11,6 +11,7 @@ import InputFile from "../forms/InputFile";
 import { supabase } from "@/lib/supabase";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { queryClient } from "@/providers/ReactQueryProvider";
 
 type LaporanFormValues = {
     judul_laporan: string;
@@ -186,6 +187,7 @@ export default function ModalLaporan({
                 loading: false,
                 error: null
             });
+            queryClient.invalidateQueries({ queryKey: ["laporan"] });
         },
         onError: (error) => {
             toast.error(`Gagal mengunggah laporan: ${error.message}`);

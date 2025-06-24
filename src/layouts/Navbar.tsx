@@ -1,8 +1,7 @@
 "use client"
 import Link from "next/link";
 import { 
-    History, 
-    Info, 
+    History,  
     Plus, 
     Menu 
 } from "lucide-react";
@@ -44,12 +43,12 @@ export default function Navbar() {
                                 History
                             </Link>
                         </li>
-                        <li className="inline-block mr-4">
+                        {/* <li className="inline-block mr-4">
                             <Link href="/about" className="text-gray-main flex items-center gap-2">
                                 <Info />
                                 About
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>   
                 </nav>
 
@@ -91,7 +90,7 @@ export default function Navbar() {
                                 History
                             </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link 
                                 href="/about" 
                                 className="text-gray-main flex items-center gap-2"
@@ -99,7 +98,7 @@ export default function Navbar() {
                                 <Info />
                                 About
                             </Link>
-                        </li>
+                        </li> */}
                         <li>
                             <ModalLaporan>
                                 {({ openModal }) => (

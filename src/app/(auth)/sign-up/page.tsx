@@ -14,11 +14,13 @@ import MainLayout from "@/layouts/MainLayout";
 import { supabase } from "@/lib/supabase";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import SelectInput from "@/components/forms/SelectInput";
 
 type SignUpFormValues = {
     email: string;
     password: string;
     username: string;
+    role: string; 
 }
 
 export default function SingUpPage() {
@@ -26,10 +28,11 @@ export default function SingUpPage() {
     defaultValues: {
       email: "",
       password: "",
-      username: ""
+      username: "",
+      role: "", 
     },
   });
-  const { handleSubmit } = methods;
+  const { handleSubmit, control } = methods;
 
   const router = useRouter();
 
@@ -42,6 +45,7 @@ export default function SingUpPage() {
             options: {
                 data: {
                   username: data.username,
+                  role: data.role,
                 },
             },
         })
@@ -60,6 +64,7 @@ export default function SingUpPage() {
                     id: user?.id,             
                     email: data.email,
                     user_name: data.username,
+                    peran: data.role,
                 },
             ]);
 
@@ -96,7 +101,7 @@ export default function SingUpPage() {
       <FormProvider {...methods}>
         <form 
             onSubmit={handleSubmit(onSubmit)}
-            className="flex-1 flex justify-center items-center border p-5 w-full"
+            className="flex-1 flex justify-center items-center border p-5 w-full max-h-screen overflow-y-auto"
         >
           <div className="w-full max-w-[520px]">
             <div className="flex flex-col items-center mb-8">
@@ -159,6 +164,37 @@ export default function SingUpPage() {
                     value: 6,
                     message: "Password must be at least 6 characters",
                   },
+                }}
+              />
+
+              <SelectInput 
+                name="role"
+                label="Role"
+                control={control}  
+                options={[
+                  {
+                    value: "Pekerja",
+                    label: "Pekerja"
+                  },
+                  {
+                    value: "Mahasiswa",
+                    label: "Mahasiswa"
+                  },
+                  {
+                    value: "Anak / Remaja",
+                    label: "Anak / Remaja"
+                  },
+                  {
+                    value: "Pelajar",
+                    label: "Pelajar"
+                  },
+                  {
+                    value: "Orang Tua",
+                    label: "Orang Tua / Wali"
+                  }
+                ]}
+                rules={{
+                  required: "Peran is required",
                 }}
               />
             </div>
