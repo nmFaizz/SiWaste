@@ -88,7 +88,7 @@ export default function SingUpPage() {
 
   return (
     <MainLayout widthSize="full" className="flex">
-      <Link href="/" className="flex-1 bg-gray-main max-h-screen md:block hidden">
+      <figure className="flex-1 bg-gray-main max-h-screen md:block hidden">
         <Image 
           src="/siwaste-login-reg.jpg"
           alt="Sign In Background"
@@ -97,7 +97,7 @@ export default function SingUpPage() {
           className="w-full h-full object-cover"
           priority
         />
-      </Link>
+      </figure>
       <FormProvider {...methods}>
         <form 
             onSubmit={handleSubmit(onSubmit)}
@@ -112,14 +112,16 @@ export default function SingUpPage() {
             </div>
 
             <figure>
-              <Image 
-                src="/SiWaste-Logo.png"
-                alt="SiWaste Logo"
-                width={150}
-                height={150}
-                className="mx-auto mb-4"
-                priority
-              />  
+              <Link href="/">
+                <Image 
+                  src="/SiWaste-Logo.png"
+                  alt="SiWaste Logo"
+                  width={150}
+                  height={150}
+                  className="mx-auto mb-4"
+                  priority
+                />  
+              </Link>
             </figure> 
             <div className="space-y-4 mb-12">
               <Input 
