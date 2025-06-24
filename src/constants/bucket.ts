@@ -1,0 +1,1 @@
+export const bucketUrl =  "https://lpxpxgorivdvryatmpsc.supabase.co/storage/v1/object/public/foto-laporan/";

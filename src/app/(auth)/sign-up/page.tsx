@@ -41,7 +41,7 @@ export default function SingUpPage() {
             password: data.password,
             options: {
                 data: {
-                username: data.username,
+                  username: data.username,
                 },
             },
         })

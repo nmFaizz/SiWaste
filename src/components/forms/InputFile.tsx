@@ -15,6 +15,7 @@ export type InputFileProps = {
 	helperTextClassName?: string
 	inputSize?: InputSize
 	hideError?: boolean
+	requireSquare?: boolean
 validation?: RegisterOptions
 } & React.ComponentPropsWithoutRef<"input">
 
@@ -25,6 +26,7 @@ export default function InputFile({
 	hideError = false,
 	validation,
 	className,
+	requireSquare = false,
 	readOnly = false,
 	labelClassName,
 	helperTextClassName,
@@ -33,6 +35,8 @@ export default function InputFile({
 	const {
 		register,
 		setValue,
+		setError,
+		clearErrors,
 		formState: { errors },
 	} = useFormContext()
 
@@ -44,14 +48,47 @@ export default function InputFile({
 
 	const handleFile = (file: File) => {
 		if (file && file.type.startsWith("image/")) {
-			const reader = new FileReader()
-			reader.onloadend = () => {
-				setPreview(reader.result as string)
+			const img = new Image()
+			const objectUrl = URL.createObjectURL(file)
+
+			img.onload = () => {
+				const isSquare = img.width === img.height
+
+				// if (!requireSquare || isSquare) {
+				// 	const reader = new FileReader()
+				// 	reader.onloadend = () => {
+				// 		setPreview(reader.result as string)
+				// 	}
+				// 	reader.readAsDataURL(file)
+				// 	setValue(id, file)
+				// 	clearErrors(id)
+				// } else {
+				// 	setError(id, {
+				// 		type: "manual",
+				// 		message: "Gambar harus memiliki rasio 1:1 (persegi).",
+				// 	})
+				// 	setPreview(null)
+				// 	setValue(id, null)
+				// 	if (fileInputRef.current) {
+				// 		fileInputRef.current.value = ""
+				// 	}
+				// }
+
+				const reader = new FileReader()
+					reader.onloadend = () => {
+						setPreview(reader.result as string)
+					}
+					reader.readAsDataURL(file)
+					setValue(id, file)
+					clearErrors(id)
+
+				URL.revokeObjectURL(objectUrl)
 			}
-			reader.readAsDataURL(file)
-			setValue(id, file) // Set value to react-hook-form
+
+			img.src = objectUrl
 		}
 	}
+
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0]

@@ -4,6 +4,10 @@ import MainLayout from "@/layouts/MainLayout";
 import { supabase } from "@/lib/supabase";
 import { Laporan } from "@/types/laporan";
 import { useQuery } from "@tanstack/react-query";
+import { Flag, Hand } from "lucide-react";
+import Image from "next/image";
+import { bucketUrl } from "@/constants/bucket"
+import ModalTangani from "@/components/modals/ModalTangani";
 
 export default function SingleLaporanClient({
     id,
@@ -38,26 +42,41 @@ export default function SingleLaporanClient({
                 <div className="p-8 rounded-xl flex flex-col items-center gap-5 justify-center bg-white-main">
                     <div className="flex flex-col items-center gap-5">
                         <figure className="bg-gray-main w-[180px] h-[180px]">
-
+                            <Image 
+                                src={bucketUrl + laporan?.foto_laporan || "/images/no-image.png"}
+                                alt="Foto Laporan"
+                                width={180}
+                                height={180}
+                                className="w-full h-full object-cover rounded-lg"
+                            />
                         </figure>
 
                         <div className="flex flex-col items-center text-center">
                             <h3 className="font-medium text-2xl">{laporan?.judul}</h3>
                             <p className="text-xl">{laporan?.user.user_name}</p>
 
-                            <div className={`mt-3 border ${laporan?.status_bersih ? "border-success-main text-success-main" : "text-error-main bg-error-main"} border-success-main text-success-main px-4 py-0.5 rounded-full w-max`}>
+                            <div className={`mt-3 border ${laporan?.status_bersih ? "border-success-main text-success-main" : "text-error-main border-error-main"} px-4 py-0.5 rounded-full w-max`}>
                                 <p className="text-xs">{laporan?.status_bersih ? "BERSIH" : "BELUM BERSIH"}</p>
                             </div>
                         </div>
                     </div>
                     
                     <div className="flex flex-col gap-3 max-w-[350px]">
-                        <Button variant="danger" className="flex items-center justify-center">
-                            Laporkan Laporan
+                        <Button leftIcon={Flag} variant="danger" className="flex items-center justify-center">
+                            Laporkan
                         </Button>
-                        <Button className="flex items-center justify-center">
-                            Tangani Sampah
-                        </Button>
+
+                        <ModalTangani id={id}>
+                            {({ openModal }) => (
+                                <Button
+                                    onClick={openModal}
+                                    leftIcon={Hand}
+                                    className="flex items-center justify-center"
+                                >
+                                    Tangani
+                                </Button>
+                            )}
+                        </ModalTangani>
                     </div>
                 </div>
             </div>

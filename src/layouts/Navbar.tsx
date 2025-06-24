@@ -39,7 +39,7 @@ export default function Navbar() {
                     
                     <ul className="hidden md:flex items-center gap-8">
                         <li className="inline-block mr-4">
-                            <Link href="/" className="text-gray-main flex items-center gap-2">
+                            <Link href="/history" className="text-gray-main flex items-center gap-2">
                                 <History />
                                 History
                             </Link>
