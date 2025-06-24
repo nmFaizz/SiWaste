@@ -261,7 +261,6 @@ export default function ModalLaporan({
                                 id="foto_laporan"
                                 label="Foto Laporan"
                                 capture="environment"
-                                requireSquare
                             />
 
                             {/* Location Section */}

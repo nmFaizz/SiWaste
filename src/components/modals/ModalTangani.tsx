@@ -136,7 +136,6 @@ export default function ModalTangani({
                                 id="foto_laporan"
                                 label="Foto Laporan"
                                 capture="environment"
-                                requireSquare
                             />
 
                             <div className="flex flex-col sm:flex-row items-center gap-5">

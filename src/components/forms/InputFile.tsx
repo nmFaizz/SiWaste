@@ -15,7 +15,6 @@ export type InputFileProps = {
 	helperTextClassName?: string
 	inputSize?: InputSize
 	hideError?: boolean
-	requireSquare?: boolean
 validation?: RegisterOptions
 } & React.ComponentPropsWithoutRef<"input">
 
@@ -26,7 +25,6 @@ export default function InputFile({
 	hideError = false,
 	validation,
 	className,
-	requireSquare = false,
 	readOnly = false,
 	labelClassName,
 	helperTextClassName,
@@ -35,7 +33,6 @@ export default function InputFile({
 	const {
 		register,
 		setValue,
-		setError,
 		clearErrors,
 		formState: { errors },
 	} = useFormContext()
@@ -52,7 +49,7 @@ export default function InputFile({
 			const objectUrl = URL.createObjectURL(file)
 
 			img.onload = () => {
-				const isSquare = img.width === img.height
+				// const isSquare = img.width === img.height
 
 				// if (!requireSquare || isSquare) {
 				// 	const reader = new FileReader()

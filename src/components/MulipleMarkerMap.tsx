@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { GoogleMap, Marker, InfoWindow, useJsApiLoader } from "@react-google-maps/api";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/lib/supabase";
 import { Laporan } from "@/types/laporan";
 
 type MultipleMarkerMapProps = {
