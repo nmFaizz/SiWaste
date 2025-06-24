@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GoogleMap, Marker, InfoWindow, useJsApiLoader } from "@react-google-maps/api";
 import { Laporan } from "@/types/laporan";
 
@@ -18,15 +18,47 @@ export default function MultipleMarkerMap({ laporanList }: MultipleMarkerMapProp
   });
 
   const [selectedLaporan, setSelectedLaporan] = useState<Laporan | null>(null);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
 
-  if (!isLoaded) return <p>Memuat peta...</p>;
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Gagal mendapatkan lokasi pengguna:", error);
+          setUserLocation({ lat: -6.2, lng: 106.8 }); // fallback ke Jakarta
+        }
+      );
+    } else {
+      console.warn("Geolocation tidak didukung browser ini.");
+      setUserLocation({ lat: -6.2, lng: 106.8 }); // fallback
+    }
+  }, []);
 
-  const center = laporanList.length
-    ? { lat: laporanList[0].lokasi?.lat || 0, lng: laporanList[0].lokasi?.long || 0 }
-    : { lat: -6.2, lng: 106.8 }; 
+  if (!isLoaded || !userLocation) return <p>Memuat peta...</p>;
 
   return (
-    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={13}>
+    <GoogleMap mapContainerStyle={containerStyle} center={userLocation} zoom={13}>
+      {/* Marker lokasi pengguna */}
+      <Marker
+        position={userLocation}
+        label={{
+          text: "Lokasi Anda",
+          fontSize: "12px",
+          fontWeight: "bold",
+          color: "blue",
+        }}
+        icon={{
+          url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+        }}
+      />
+
+      {/* Marker laporan */}
       {laporanList?.map((laporan) => (
         <Marker
           key={laporan.laporan_id}
@@ -42,6 +74,7 @@ export default function MultipleMarkerMap({ laporanList }: MultipleMarkerMapProp
         />
       ))}
 
+      {/* InfoWindow jika marker dipilih */}
       {selectedLaporan && (
         <InfoWindow
           position={{

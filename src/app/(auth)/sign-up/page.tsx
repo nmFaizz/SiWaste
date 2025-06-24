@@ -88,17 +88,15 @@ export default function SingUpPage() {
 
   return (
     <MainLayout widthSize="full" className="flex">
-      <Link href="/">
-        <figure className="flex-1 bg-gray-main max-h-screen md:block hidden">
-          <Image 
-            src="/siwaste-login-reg.jpg"
-            alt="Sign In Background"
-            width={1920}
-            height={1080}
-            className="w-full h-full object-cover"
-            priority
-          />
-        </figure>
+      <Link href="/" className="flex-1 bg-gray-main max-h-screen md:block hidden">
+        <Image 
+          src="/siwaste-login-reg.jpg"
+          alt="Sign In Background"
+          width={1920}
+          height={1080}
+          className="w-full h-full object-cover"
+          priority
+        />
       </Link>
       <FormProvider {...methods}>
         <form 
@@ -186,6 +184,7 @@ export default function SingUpPage() {
                     value: "Anak / Remaja",
                     label: "Anak / Remaja"
                   },
+
                   {
                     value: "Pelajar",
                     label: "Pelajar"
