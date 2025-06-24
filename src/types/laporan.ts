@@ -13,5 +13,9 @@ export type Laporan = {
         user_name: string;
         peran: UserPeran;
     }
+    lokasi?: {
+        lat: number;
+        long: number;
+    }
 };
 

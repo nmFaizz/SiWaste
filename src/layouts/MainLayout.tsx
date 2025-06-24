@@ -18,10 +18,10 @@ export default function MainLayout({
         <>
             {withNavbar && <Navbar />}
             <main className={cn(
-                "min-h-screen w-full mx-auto", 
+                "w-full mx-auto", 
                 widthSize === "1200" && "max-w-[1200px] px-4 py-8",
                 widthSize === "720" && "max-w-[720px] px-4 py-8",
-                widthSize === "full" && "w-full",
+                widthSize === "full" && "min-h-screen w-full",
                 className
             )}>
                 {children}

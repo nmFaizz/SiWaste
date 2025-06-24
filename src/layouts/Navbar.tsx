@@ -11,6 +11,7 @@ import Button from "@/components/buttons/Button";
 import ModalLaporan from "@/components/modals/ModalLaporan";
 import useUserProfile from "@/hooks/useUserProfile";
 import Image from "next/image";
+import ButtonLink from "@/components/buttons/ButtonLink";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -37,12 +38,14 @@ export default function Navbar() {
                     </Link>
                     
                     <ul className="hidden md:flex items-center gap-8">
-                        <li className="inline-block mr-4">
-                            <Link href="/history" className="text-gray-main flex items-center gap-2">
-                                <History />
-                                History
-                            </Link>
-                        </li>
+                        {user && (
+                            <li className="inline-block mr-4">
+                                <Link href="/history" className="text-gray-main flex items-center gap-2">
+                                    <History />
+                                    History
+                                </Link>
+                            </li>
+                        )}
                         {/* <li className="inline-block mr-4">
                             <Link href="/about" className="text-gray-main flex items-center gap-2">
                                 <Info />
@@ -51,25 +54,37 @@ export default function Navbar() {
                         </li> */}
                     </ul>   
                 </nav>
+                
+                {user && (
+                    <nav className="hidden md:flex items-center gap-8">
+                        <ModalLaporan>
+                            {({ openModal }) => (
+                                <Button
+                                    onClick={openModal}
+                                    rightIcon={Plus}
+                                >
+                                    Buat Laporan
+                                </Button>
+                            )}
+                        </ModalLaporan>
 
-                <nav className="hidden md:flex items-center gap-8">
-                    <ModalLaporan>
-                        {({ openModal }) => (
-                            <Button
-                                onClick={openModal}
-                                rightIcon={Plus}
-                            >
-                                Buat Laporan
-                            </Button>
-                        )}
-                    </ModalLaporan>
+                        <Link href="/profile">
+                            <figure className="rounded-full w-[40px] h-[40px] bg-gray-main hover:border-[5px] hover:border-primary-hover">
 
-                    <Link href="/profile">
-                        <figure className="rounded-full w-[40px] h-[40px] bg-gray-main hover:border-[5px] hover:border-primary-hover">
+                            </figure>
+                        </Link>
+                    </nav>
+                )}
 
-                        </figure>
-                    </Link>
-                </nav>
+                {!user && (
+                    <ul className="flex flex-col items-start gap-4">
+                        <li>
+                            <ButtonLink href="/sign-in" className="md:block hidden">
+                                Sign In
+                            </ButtonLink>
+                        </li>
+                    </ul>
+                )}
 
                 <div 
                     onClick={() => setIsOpen(!isOpen)}
@@ -80,49 +95,62 @@ export default function Navbar() {
             </div>
             {isOpen && (
                 <nav className="md:hidden bg-white-main border-b border-gray-main px-4 py-[12px]">
-                    <ul className="flex flex-col items-start gap-4">
-                        <li>
-                            <Link 
-                                href="/" 
-                                className="text-gray-main flex items-center gap-2"
-                            >
-                                <History />
-                                History
-                            </Link>
-                        </li>
-                        {/* <li>
-                            <Link 
-                                href="/about" 
-                                className="text-gray-main flex items-center gap-2"
-                            >
-                                <Info />
-                                About
-                            </Link>
-                        </li> */}
-                        <li>
-                            <ModalLaporan>
-                                {({ openModal }) => (
-                                    <Button
-                                        onClick={openModal}
-                                        rightIcon={Plus}
-                                    >
-                                        Buat Laporan
-                                    </Button>
-                                )}
-                            </ModalLaporan>
-                        </li>
-                        <li className="flex items-center gap-4 hover:bg-white-secondary rounded-xl">
-                            <Link href="/profile">
-                                <figure className="rounded-full w-[50px] h-[50px] bg-gray-main">
-                                    
-                                </figure>
-                            </Link>
+                    {user && (
+                        <ul className="flex flex-col items-start gap-4">
+                            
+                            <li>
+                                <Link 
+                                    href="/" 
+                                    className="text-gray-main flex items-center gap-2"
+                                >
+                                    <History />
+                                    History
+                                </Link>
+                            </li>
+                            {/* <li>
+                                <Link 
+                                    href="/about" 
+                                    className="text-gray-main flex items-center gap-2"
+                                >
+                                    <Info />
+                                    About
+                                </Link>
+                            </li> */}
+                            <li>
+                                <ModalLaporan>
+                                    {({ openModal }) => (
+                                        <Button
+                                            onClick={openModal}
+                                            rightIcon={Plus}
+                                        >
+                                            Buat Laporan
+                                        </Button>
+                                    )}
+                                </ModalLaporan>
+                            </li>
+                            <li className="flex items-center gap-4 hover:bg-white-secondary rounded-xl">
+                                <Link href="/profile">
+                                    <figure className="rounded-full w-[50px] h-[50px] bg-gray-main">
+                                        
+                                    </figure>
+                                </Link>
 
-                            <p className="font-bold">{user?.user_name}</p>
-                        </li>
-                    </ul>
+                                <p className="font-bold">{user?.user_name}</p>
+                            </li>
+                        </ul>
+                    )}
+                    {!user && (
+                        <ul className="flex flex-col items-start gap-4">
+                            <li>
+                                <ButtonLink href="/sign-in">
+                                    Login
+                                </ButtonLink>
+                            </li>
+                        </ul>
+                    )}
                 </nav>
             )}
+
         </header>
     )
 }

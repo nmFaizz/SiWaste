@@ -12,6 +12,7 @@ import { supabase } from "@/lib/supabase";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { queryClient } from "@/providers/ReactQueryProvider";
+import MapView from "../MapView";
 
 type LaporanFormValues = {
     judul_laporan: string;
@@ -159,7 +160,6 @@ export default function ModalLaporan({
 
             const idLokasiBaru = lokasiData[0].lokasi_id;
 
-            console.log(lokasiData)
 
             const { error: insertError } = await supabase
                 .from("laporan")
@@ -295,10 +295,17 @@ export default function ModalLaporan({
                                 )}
                                 
                                 {location.latitude && location.longitude ? (
-                                    <div className="text-sm text-gray-600">
-                                        <p>Latitude: {location.latitude.toFixed(6)}</p>
-                                        <p>Longitude: {location.longitude.toFixed(6)}</p>
-                                    </div>
+                                    <>
+                                        <div className="text-sm text-gray-600">
+                                            <p>Latitude: {location.latitude.toFixed(6)}</p>
+                                            <p>Longitude: {location.longitude.toFixed(6)}</p>
+                                        </div>
+
+                                        <MapView 
+                                            latitude={location.latitude}
+                                            longitude={location.longitude}
+                                        />
+                                    </>
                                 ) : (
                                     <div className="text-sm text-gray-500">
                                         {location.loading ? 'Sedang mendapatkan lokasi...' : 'Lokasi belum didapatkan'}

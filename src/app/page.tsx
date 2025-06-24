@@ -4,10 +4,10 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <MainLayout withNavbar={true} widthSize="full" className="flex items-center justify-center">
-        <main className="flex flex-col item-center justify-center text-center px-4">
+    <MainLayout withNavbar={true} widthSize="1200" className="flex items-center justify-center">
+        <main className="h-[80vh] flex flex-col item-center justify-center text-center px-4">
          <h2 className="text-5xl md:text-7xl font-semibold text-primary">Satu Laporan</h2>
-         <h3 className="text-5xl md:text-7xl font-semibold text-gray-800 mt-2">Seribu Perubahan</h3>
+         <h3 className="text-5exl md:text-7xl font-semibold text-gray-800 mt-2">Seribu Perubahan</h3>
 
          <p className="text-gray-600 max-w-xl mt-4">
           SiWaste merupakan aplikasi pelaporan sampah. <br />
